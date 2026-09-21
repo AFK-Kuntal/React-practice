@@ -1,33 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+
+const messages = ["Learn React", "Master React", "Earn With React"];
 
 function App() {
   return <Steps />;
 }
 
 function Steps() {
+  const [step, setStep] = useState(1);
+  const [open, setOpen] = useState(true);
+
+  const goPrev = function () {
+    if (step > 1) setStep((st) => st - 1);
+  };
+
+  const goNext = function () {
+    if (step < 3) setStep((st) => st + 1);
+  };
   return (
-    <main className="steps">
-      <div className="numbers">
-        <div className="active">{1}</div>
-        <div>{2}</div>
-        <div>{3}</div>
-      </div>
-      <div className="message">
-        <h3>Step:1</h3>
-        <p>Learn React</p>
-      </div>
-      <div className="buttons">
-        <Button name="previous" className="btn" />
-        <Button name="next" className="btn" />
-      </div>
-    </main>
+    <>
+      <button className="cross" onClick={() => setOpen((is) => !is)}>
+        &times;
+      </button>
+      {open && (
+        <main className="steps">
+          <div className="numbers">
+            <div className={step >= 1 ? "active" : ""}>{1}</div>
+            <div className={step >= 2 ? "active" : ""}>{2}</div>
+            <div className={step >= 3 ? "active" : ""}>{3}</div>
+          </div>
+          <div className="message">
+            <h3>{`Step:${step}`}</h3>
+            <p>{messages[step - 1]}</p>
+          </div>
+          <div className="buttons">
+            <Button name="previous" onClick={goPrev} />
+            <Button name="next" onClick={goNext} />
+          </div>
+        </main>
+      )}
+    </>
   );
 }
 
-function Button({ name }) {
-  return <button>{name}</button>;
+function Button({ name, onClick }) {
+  return (
+    <button className="btn" onClick={onClick}>
+      {name}
+    </button>
+  );
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
