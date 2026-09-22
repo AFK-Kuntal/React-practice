@@ -1,0 +1,27 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.step,
+.counter {
+  display: flex;
+  gap: 1rem;
+}
+button {
+  font-size: 30px;
+  padding: 5px 20px;
+  border: none;
+  border-radius: 15px;
+}
+p {
+  font-weight: bolder;
+  font-size: 20px;
+}
