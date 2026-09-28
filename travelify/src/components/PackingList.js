@@ -16,6 +16,8 @@ export default function PackingList({
     sortedItem = items
       .slice()
       .sort((a, b) => Number(a.packed) - Number(b.packed));
+  else if (sortBy === "quantity")
+    sortedItem = items.slice().sort((a, b) => a.val - b.val);
 
   return (
     <div className="list">
@@ -39,6 +41,7 @@ export default function PackingList({
           <option value="input">Sort by input order</option>
           <option value="description">Sort by description</option>
           <option value="status">Sort by packed status</option>
+          <option value="quantity">Sort by Quantity</option>
         </select>
         <button name="clear-all" onClick={onDeleteAllItem}>
           Clear All
