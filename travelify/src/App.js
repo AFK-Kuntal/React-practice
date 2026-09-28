@@ -49,7 +49,11 @@ function Form({ onAddItem }) {
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <h3>Add Items needed for the trip</h3>
-      <select value={val} onChange={(e) => setVal(Number(e.target.value))}>
+      <select
+        name="quant"
+        value={val}
+        onChange={(e) => setVal(Number(e.target.value))}
+      >
         {Array.from({ length: 20 }, (_, index) => index + 1).map((i) => (
           <option value={i} key={i}>
             {i}
@@ -61,8 +65,9 @@ function Form({ onAddItem }) {
         placeholder="item..."
         value={desc}
         onChange={(e) => setDesc(e.target.value)}
+        name="item"
       ></input>
-      <button>Add</button>
+      <button name="submit-item">Add</button>
     </form>
   );
 }
@@ -71,28 +76,43 @@ function PackingList({ items, onToggleItem, onDeleteItem }) {
   return (
     <div className="list">
       <ul>
-        <Items
-          items={items}
-          onToggleItem={onToggleItem}
-          onDeleteItem={onDeleteItem}
-        />
+        {items.map((item) => (
+          <Items
+            item={item}
+            onToggleItem={onToggleItem}
+            onDeleteItem={onDeleteItem}
+            key={item.id}
+          />
+        ))}
       </ul>
+
+      <div className="action">
+        <select name="sorting">
+          <option>Sort by input order</option>
+          <option>Sort by description</option>
+          <option>Sort by packed status</option>
+        </select>
+        <button name="clear-all">Clear All</button>
+      </div>
     </div>
   );
 }
 
-function Items({ items, onToggleItem, onDeleteItem }) {
+function Items({ item, onToggleItem, onDeleteItem }) {
   return (
     <li>
       <input
+        name="pack-status"
         type="checkbox"
-        value={items.packed}
-        onChange={() => onToggleItem(items.id)}
+        checked={item.packed}
+        onChange={() => onToggleItem(item.id)}
       ></input>
-      <span style={items.packed ? { textDecoration: "line-through" } : {}}>
-        {items.val} {items.desc}
+      <span style={item.packed ? { textDecoration: "line-through" } : {}}>
+        {item.val} {item.desc}
       </span>
-      <button onClick={() => onDeleteItem(items.id)}>&times</button>
+      <button name="delete-item" onClick={() => onDeleteItem(item.id)}>
+        ❌
+      </button>
     </li>
   );
 }
