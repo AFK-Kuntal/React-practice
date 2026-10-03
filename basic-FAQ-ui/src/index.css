@@ -1,0 +1,64 @@
+html {
+  box-sizing: border-box;
+  font-size: 65%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+/* Main part */
+.app {
+  min-height: 100vh;
+  padding: 40px 20px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: min(50%, 100%);
+  border: 2px solid black;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.heading span {
+  border-radius: 71px;
+  background-color: rgb(195 174 243);
+  font-size: clamp(2rem, 4vw, 4rem);
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+}
+
+.heading h2 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.heading p {
+  font-size: 1rem;
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.accordionItem {
+  display: flex;
+  flex-direction: center;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(31, 41, 55, 0.05);
+}
