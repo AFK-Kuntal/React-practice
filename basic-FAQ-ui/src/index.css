@@ -17,7 +17,8 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: min(50%, 100%);
+  flex-direction: column;
+  width: min(700px, 100%);
   border: 2px solid black;
 }
 
@@ -27,6 +28,7 @@ html {
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .heading span {
@@ -46,19 +48,47 @@ html {
 }
 
 .accordion {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 
 .accordionItem {
   display: flex;
-  flex-direction: center;
   justify-content: center;
   align-items: center;
   width: 100%;
-  border: none;
+  /* border: 2px solid black; */
   border-radius: 20px;
   box-shadow: 0 5px 20px rgba(31, 41, 55, 0.05);
+  padding: 10px 24px;
+}
+
+.accordionQuestion {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.accordionQuestion span {
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+.accordionQuestion span:hover {
+  color: rgb(178, 145, 255);
+}
+
+.accordionQuestion button {
+  border: none;
+  font-size: 3rem;
+  border-radius: 50%;
+  background-color: rgb(195 174 243);
+  padding: 5px 14px;
+  cursor: pointer;
 }

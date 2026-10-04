@@ -55,7 +55,7 @@ function AccordionItem({ index, item }) {
     <div className="accordionItem">
       <div className="accordionQuestion">
         <span>{item.question}</span>
-        <span>+</span>
+        <button>+</button>
       </div>
     </div>
   );
