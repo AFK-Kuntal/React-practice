@@ -58,9 +58,11 @@ html {
 
 .accordionItem {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
+  gap: 1rem;
   /* border: 2px solid black; */
   border-radius: 20px;
   box-shadow: 0 5px 20px rgba(31, 41, 55, 0.05);
@@ -81,14 +83,36 @@ html {
 }
 
 .accordionQuestion span:hover {
-  color: rgb(178, 145, 255);
+  color: rgb(125, 82, 228);
 }
 
 .accordionQuestion button {
   border: none;
-  font-size: 3rem;
+  font-size: 2rem;
   border-radius: 50%;
+  /* border-radius: 99999px; */
   background-color: rgb(195 174 243);
   padding: 5px 14px;
   cursor: pointer;
+  height: 35px;
+  width: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  /* border: none;
+  font-size: 2rem;
+  border-radius: 50%;
+  background-color: rgb(195, 174, 243);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; */
+}
+
+.accordionAnswer {
+  font-size: 1.5rem;
 }
