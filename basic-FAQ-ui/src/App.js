@@ -43,32 +43,36 @@ function Heading() {
 }
 
 function Accordion() {
+  const [isOpen, setIsOpen] = useState(null);
   return (
     <div className="accordion">
       {faqs.map((item, index) => (
-        <AccordionItem index={index} item={item} key={item.question} />
+        <AccordionItem
+          index={index}
+          item={item}
+          key={item.question}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
       ))}
     </div>
   );
 }
 
-function AccordionItem({ index, item }) {
-  const [isOpen, setIsOpen] = useState(false);
+function AccordionItem({ index, item, isOpen, setIsOpen }) {
+  let currOpen = isOpen === index;
+  function handleClick() {
+    setIsOpen(currOpen ? null : index);
+  }
 
   return (
     <div className="accordionItem">
       <div className="accordionQuestion">
         <span>{item.question}</span>
-        <button onClick={() => setIsOpen((isOpen) => !isOpen)}>
-          {isOpen ? "-" : "+"}
-        </button>
+        <button onClick={handleClick}>{currOpen ? "-" : "+"}</button>
       </div>
 
-      {isOpen && (
-        <div className="accordionAnswer">
-          <p>{item.answer}</p>
-        </div>
-      )}
+      {currOpen && <div className="accordionAnswer">{item.answer}</div>}
     </div>
   );
 }
