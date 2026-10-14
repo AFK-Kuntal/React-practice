@@ -66,7 +66,7 @@ function AccordionItem({ index, item, isOpen, setIsOpen }) {
   }
 
   return (
-    <div className="accordionItem">
+    <div className={`accordionItem ${currOpen ? "activeAccordionItem" : ""}`}>
       <div className="accordionQuestion">
         <span>{item.question}</span>
         <button onClick={handleClick}>{currOpen ? "-" : "+"}</button>

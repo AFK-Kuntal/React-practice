@@ -67,7 +67,9 @@ html {
   border-radius: 20px;
   box-shadow: 0 5px 20px rgba(31, 41, 55, 0.05);
   padding: 10px 24px;
+  transition: all 2s ease-in-out;
 }
+
 
 .accordionQuestion {
   width: 100%;
@@ -91,7 +93,7 @@ html {
   font-size: 2rem;
   border-radius: 50%;
   /* border-radius: 99999px; */
-  background-color: rgb(195 174 243);
+  background-color: rgb(230, 221, 255);
   padding: 5px 14px;
   cursor: pointer;
   height: 35px;
@@ -100,6 +102,8 @@ html {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: all 1s ease-in-out;
+
   /* border: none;
   font-size: 2rem;
   border-radius: 50%;
@@ -115,4 +119,16 @@ html {
 
 .accordionAnswer {
   font-size: 1.5rem;
+}
+
+.activeAccordionItem {
+  border-left: 3px solid rgb(202, 181, 252);
+}
+
+.activeAccordionItem span {
+  color: rgb(51, 32, 97);
+}
+
+.activeAccordionItem button {
+  background-color: rgb(168, 131, 255);
 }
