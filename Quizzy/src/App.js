@@ -4,11 +4,16 @@ import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
 import StartMessage from "./StartMessage";
+import Progress from "./Progress";
+import Question from "./Question";
 
 const initialState = {
   question: [],
   status: "loading", //loading, error, ready, active, finished
   message: "",
+  index: 0,
+  points: 0,
+  answer: null,
 };
 
 const reducer = (state, action) => {
@@ -23,6 +28,20 @@ const reducer = (state, action) => {
         message: action.payload,
       };
 
+    case "start":
+      return {
+        ...state,
+        status: "active",
+      };
+
+    case "nextAnswer":
+      const currPoint = state.question.at(state.index).points;
+      return {
+        ...state,
+        answer: action.payload,
+        points: state.points + currPoint,
+      };
+
     default:
       throw new Error("Action Unknown");
   }
@@ -30,10 +49,8 @@ const reducer = (state, action) => {
 
 function App() {
   // const [state, dispatch] = useReducer(reducer, initialState)
-  const [{ question, status, message }, dispatch] = useReducer(
-    reducer,
-    initialState,
-  );
+  const [{ question, status, message, index, points, answer }, dispatch] =
+    useReducer(reducer, initialState);
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
@@ -50,6 +67,7 @@ function App() {
   }, []);
 
   const numQuestions = question.length;
+  const maxPoints = question.reduce((prev, curr) => prev + curr.points, 0);
 
   return (
     <div className="app">
@@ -59,7 +77,22 @@ function App() {
       {status === "ready" && (
         <StartMessage numQuestions={numQuestions} dispatch={dispatch} />
       )}
-      {status === "active" && <Main />}
+      {status === "active" && (
+        <Main>
+          <Progress
+            numQuestions={numQuestions}
+            index={index}
+            points={points}
+            maxPoints={maxPoints}
+          />
+          <Question
+            question={question[index]}
+            index={index}
+            dispatch={dispatch}
+            answer={answer}
+          />
+        </Main>
+      )}
     </div>
   );
 }

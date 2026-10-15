@@ -1,21 +1,12 @@
-import { useEffect } from "react";
+import Option from "./Option";
 
-function Question() {
-  useEffect(() => {
-    const fetchQuestion = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/questions");
-        if (!res.ok) throw new Error("Failed to Load Questions");
-        const data = res.json();
-        console.log(data);
-        if (data.Response === "False") throw new Error("Invalid Question");
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchQuestion();
-  }, []);
-  return <div></div>;
+function Question({ question, index, dispatch, answer }) {
+  return (
+    <div>
+      <h4>{question.question}</h4>
+      <Option question={question} index={index} dispatch={dispatch} />
+    </div>
+  );
 }
 
 export default Question;

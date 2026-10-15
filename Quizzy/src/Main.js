@@ -1,15 +1,5 @@
-import Progress from "./Progress";
-import Question from "./Question";
-// import Footer from "./Footer";
-
-function Main() {
-  return (
-    <div className="main">
-      <Progress />
-      <Question />
-      {/* <Footer /> */}
-    </div>
-  );
+function Main({ children }) {
+  return <main className="main">{children}</main>;
 }
 
 export default Main;

@@ -1,12 +1,12 @@
-function Progress() {
+function Progress({ numQuestions, index, points, maxPoints }) {
   return (
     <div className="progress">
-      <progress max={10} value={5}></progress>
+      <progress max={numQuestions} value={index}></progress>
       <p>
-        Question <strong>5</strong>/ 10
+        Question <strong>{index + 1}</strong>/ {numQuestions}
       </p>
       <p>
-        <strong>5</strong> / 10
+        <strong>{points}</strong> / {maxPoints}
       </p>
     </div>
   );

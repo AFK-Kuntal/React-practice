@@ -1,8 +1,8 @@
 function StartMessage({ numQuestions, dispatch }) {
   return (
     <div className="start">
-      <p>Welcome to The React Quiz!</p>
-      <p>{numQuestions} questions to test your React mastery</p>
+      <h2>Welcome to The React Quiz!</h2>
+      <h3>{numQuestions} questions to test your React mastery</h3>
       <button
         className="btn btn-ui"
         onClick={() => dispatch({ type: "start" })}
