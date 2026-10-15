@@ -1,13 +1,13 @@
 import Progress from "./Progress";
-// import Question from "./Question";
+import Question from "./Question";
 // import Footer from "./Footer";
 
 function Main() {
   return (
     <div className="main">
       <Progress />
-      {/* <Question />
-      <Footer /> */}
+      <Question />
+      {/* <Footer /> */}
     </div>
   );
 }
