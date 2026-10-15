@@ -6,6 +6,8 @@ import Error from "./Error";
 import StartMessage from "./StartMessage";
 import Progress from "./Progress";
 import Question from "./Question";
+import Footer from "./Footer";
+import NextButton from "./NextButton";
 
 const initialState = {
   question: [],
@@ -14,6 +16,7 @@ const initialState = {
   index: 0,
   points: 0,
   answer: null,
+  highScore: 0,
 };
 
 const reducer = (state, action) => {
@@ -35,11 +38,25 @@ const reducer = (state, action) => {
       };
 
     case "nextAnswer":
-      const currPoint = state.question.at(state.index).points;
+      const currQues = state.question.at(state.index);
       return {
         ...state,
         answer: action.payload,
-        points: state.points + currPoint,
+        points:
+          currQues.correctOption === action.payload
+            ? state.points + currQues.points
+            : state.points,
+      };
+
+    case "nextQuestion":
+      return { ...state, index: state.index + 1, answer: null };
+
+    case "finish":
+      return {
+        ...state,
+        status: "finished",
+        highScore:
+          state.points > state.highScore ? state.points : state.highScore,
       };
 
     default:
@@ -78,20 +95,30 @@ function App() {
         <StartMessage numQuestions={numQuestions} dispatch={dispatch} />
       )}
       {status === "active" && (
-        <Main>
-          <Progress
-            numQuestions={numQuestions}
-            index={index}
-            points={points}
-            maxPoints={maxPoints}
-          />
-          <Question
-            question={question[index]}
-            index={index}
-            dispatch={dispatch}
-            answer={answer}
-          />
-        </Main>
+        <>
+          <Main>
+            <Progress
+              numQuestions={numQuestions}
+              index={index}
+              points={points}
+              maxPoints={maxPoints}
+            />
+            <Question
+              question={question[index]}
+              index={index}
+              dispatch={dispatch}
+              answer={answer}
+            />
+          </Main>
+          <Footer>
+            <NextButton
+              dispatch={dispatch}
+              answer={answer}
+              index={index}
+              numQuestions={numQuestions}
+            />
+          </Footer>
+        </>
       )}
     </div>
   );
