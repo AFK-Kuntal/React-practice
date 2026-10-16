@@ -1,5 +1,5 @@
 function NextButton({ dispatch, answer, numQuestions, index }) {
-  if (answer === null) return;
+  if (answer === null) return null;
   if (index < numQuestions - 1)
     return (
       <button

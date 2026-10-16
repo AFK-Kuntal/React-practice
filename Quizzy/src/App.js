@@ -8,6 +8,10 @@ import Progress from "./Progress";
 import Question from "./Question";
 import Footer from "./Footer";
 import NextButton from "./NextButton";
+import FinishScreen from "./FinishScreen";
+import Timer from "./Timer";
+
+const SEC_PER_QUESTION = 30;
 
 const initialState = {
   question: [],
@@ -17,6 +21,7 @@ const initialState = {
   points: 0,
   answer: null,
   highScore: 0,
+  seconds: null,
 };
 
 const reducer = (state, action) => {
@@ -35,6 +40,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         status: "active",
+        seconds: state.question.length * SEC_PER_QUESTION,
       };
 
     case "nextAnswer":
@@ -59,6 +65,16 @@ const reducer = (state, action) => {
           state.points > state.highScore ? state.points : state.highScore,
       };
 
+    case "tick":
+      return {
+        ...state,
+        seconds: state.seconds - 1,
+        status: state.seconds === 1 ? "finished" : state.status,
+      };
+
+    case "restart":
+      return { ...initialState, question: state.question, status: "ready" };
+
     default:
       throw new Error("Action Unknown");
   }
@@ -66,8 +82,10 @@ const reducer = (state, action) => {
 
 function App() {
   // const [state, dispatch] = useReducer(reducer, initialState)
-  const [{ question, status, message, index, points, answer }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { question, status, message, index, points, answer, highScore, seconds },
+    dispatch,
+  ] = useReducer(reducer, initialState);
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
@@ -102,6 +120,7 @@ function App() {
               index={index}
               points={points}
               maxPoints={maxPoints}
+              answer={answer}
             />
             <Question
               question={question[index]}
@@ -111,6 +130,7 @@ function App() {
             />
           </Main>
           <Footer>
+            <Timer dispatch={dispatch} seconds={seconds} />
             <NextButton
               dispatch={dispatch}
               answer={answer}
@@ -119,6 +139,14 @@ function App() {
             />
           </Footer>
         </>
+      )}
+      {status === "finished" && (
+        <FinishScreen
+          dispatch={dispatch}
+          points={points}
+          maxPoints={maxPoints}
+          highScore={highScore}
+        />
       )}
     </div>
   );
