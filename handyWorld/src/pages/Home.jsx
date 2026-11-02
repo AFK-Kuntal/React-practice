@@ -10,7 +10,7 @@ function Home() {
         <h1>
           Travel the World.
           <br />
-          HandyWorld Keeps Track of All of Your Adventure
+          WorldWise Keeps Track of All of Your Adventure
         </h1>
         <h2>
           A world map that tracks your footsteps into every city you can think
