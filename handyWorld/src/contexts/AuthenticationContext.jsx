@@ -41,7 +41,7 @@ function Authentication({ children }) {
   function login(email, password) {
     if (USER.email === email && USER.password === password) {
       dispatch({ type: "login", payload: USER });
-      navigate("/pricing", { replace: true }); //replace=true ->so that doesn't go back to the login page again when going back
+      navigate("/app", { replace: true }); //replace=true ->so that doesn't go back to the login page again when going back
     }
   }
 

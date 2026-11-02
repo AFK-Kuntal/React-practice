@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Spinner from "./components/Spinner";
 import { Authentication } from "./contexts/AuthenticationContext";
+import AppLayout from "./pages/AppLayout";
 
 // import Product from "./pages/Product";
 const Home = lazy(() => import("./pages/Home"));
@@ -19,6 +20,7 @@ function App() {
             <Route path="product" element={<Product />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="login" element={<Login />} />
+            <Route path="app" element={<AppLayout />} />
           </Routes>
         </Suspense>
       </Authentication>
