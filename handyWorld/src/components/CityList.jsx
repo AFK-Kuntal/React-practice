@@ -1,4 +1,4 @@
-import { styles } from "./CityList.module.css";
+import styles from "./CityList.module.css";
 import { useCities } from "../contexts/CitiesContext";
 import CityItem from "./CityItem";
 import Load from "./Load";
