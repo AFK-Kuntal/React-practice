@@ -7,7 +7,7 @@ function CityList() {
   const { cities, loading } = useCities();
   if (loading) return <Load />;
   return cities.length ? (
-    <ul className={styles.CityList}>
+    <ul className={styles.cityList}>
       {cities.map((city) => (
         <CityItem city={city} key={city.id} />
       ))}

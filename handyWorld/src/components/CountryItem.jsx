@@ -1,4 +1,4 @@
-import styles from "./CountryList.module.css";
+import styles from "./CountryItem.module.css";
 import PropTypes from "prop-types";
 
 function CountryItem({ country }) {
