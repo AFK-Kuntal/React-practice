@@ -16,8 +16,17 @@ function reducer(state, action) {
       return { ...state, loading: true };
     case "cities/loaded":
       return { ...state, cities: action.payload, loading: false };
+    case "city/deleted":
+      return {
+        ...state,
+        loading: false,
+        cities: state.cities.filter((city) => city.id !== action.payload),
+      };
     case "failed":
       return { ...state, error: action.payload, loading: false };
+
+    default:
+      throw new Error("Unknown Action");
   }
 }
 
@@ -41,8 +50,18 @@ function CitiesProvider({ children }) {
     fetchCities();
   }, []);
 
+  async function deleteCity(id) {
+    dispatch({ type: "loading" });
+    try {
+      await fetch(`${BASE_URL}/cities/${id}`, { method: "DELETE" });
+      dispatch({ type: "city/deleted", payload: id });
+    } catch {
+      dispatch({ type: "failed", payload: "Failed to Delete City" });
+    }
+  }
+
   return (
-    <CitiesContext.Provider value={{ cities, loading, error }}>
+    <CitiesContext.Provider value={{ cities, loading, error, deleteCity }}>
       {children}
     </CitiesContext.Provider>
   );
@@ -57,6 +76,7 @@ function useCities() {
   if (context === undefined) {
     throw new Error("CitiesContext was used outside the CitiesProvider");
   }
+  return context;
 }
 
-export default { CitiesProvider, useCities };
+export { CitiesProvider, useCities };

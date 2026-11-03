@@ -6,8 +6,8 @@ import { useAuth } from "../contexts/AuthenticationContext";
 
 export default function Login() {
   // PRE-FILL FOR DEV PURPOSES
-  const [email, setEmail] = useState("jack@example.com");
-  const [password, setPassword] = useState("qwerty");
+  const [email, setEmail] = useState("abc@gmail.com");
+  const [password, setPassword] = useState("pass@abc");
   const { login } = useAuth();
 
   function handleOnSubmit(e) {

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { lazy, Suspense } from "react";
 import Spinner from "./components/Spinner";
@@ -11,6 +11,8 @@ const Home = lazy(() => import("./pages/Home"));
 const Product = lazy(() => import("./pages/Product"));
 const Login = lazy(() => import("./pages/Login"));
 const Pricing = lazy(() => import("./pages/Pricing"));
+const CityList = lazy(() => import("./components/CityList"));
+const CountryList = lazy(() => import("./components/CountryList"));
 
 function App() {
   return (
@@ -19,7 +21,7 @@ function App() {
         <CitiesProvider>
           <Suspense fallback={<Spinner />}>
             <Routes>
-              <Route index element={<Home />} />
+              <Route path="/" element={<Home />} />
               <Route path="product" element={<Product />} />
               <Route path="pricing" element={<Pricing />} />
               <Route path="login" element={<Login />} />
@@ -30,7 +32,11 @@ function App() {
                     <AppLayout />
                   </ProtectedRoute>
                 }
-              />
+              >
+                <Route index element={<Navigate replace to="cities" />} />
+                <Route path="cities" element={<CityList />} />
+                <Route path="countries" element={<CountryList />} />
+              </Route>
             </Routes>
           </Suspense>
         </CitiesProvider>
