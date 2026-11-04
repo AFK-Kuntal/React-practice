@@ -4,20 +4,33 @@ import {
   Marker,
   Popup,
   useMapEvent,
+  useMap,
 } from "react-leaflet";
 import Button from "./Button";
 import styles from "./Map.module.css";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { useCities } from "../contexts/CitiesContext";
 import { useNavigate } from "react-router-dom";
+import { useUrlPosition } from "../hooks/useUrlPosition";
+import { useEffect, useState } from "react";
 
 function Map() {
   const { cities } = useCities();
+  const [mapPosition, setMapPosition] = useState([40, 0]);
   const {
     loading: isLoading,
     position: geoPosition,
     getLocation,
   } = useGeoLocation();
+  const [mapLat, mapLng] = useUrlPosition();
+
+  useEffect(() => {
+    if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
+  }, [mapLat, mapLng]);
+
+  useEffect(() => {
+    if (geoPosition) setMapPosition([geoPosition.lat, geoPosition.lng]);
+  }, [geoPosition]);
 
   return (
     <div className={styles.mapContainer}>
@@ -27,7 +40,7 @@ function Map() {
         </Button>
       )}
       <MapContainer
-        center={[51.505, -0.09]}
+        center={mapPosition}
         zoom={13}
         scrollWheelZoom={false}
         className={styles.map}
@@ -47,6 +60,7 @@ function Map() {
           </Marker>
         ))}
 
+        <ChangeCenter position={mapPosition} />
         <ClickOnMap />
       </MapContainer>
     </div>
@@ -56,12 +70,12 @@ function Map() {
 function ClickOnMap() {
   const navigate = useNavigate();
   useMapEvent({
-    click: (e) => navigate(`form?lat=${e.latlng.lat}&&lng=${e.latlng.lng}`),
+    click: (e) => navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
   });
 }
-// function ChangeCenter({ position }) {
-//   const map = useMap();
-//   map.setView(position);
-//   return null;
-// }
+function ChangeCenter({ position }) {
+  const map = useMap();
+  map.setView(position);
+  return null;
+}
 export default Map;

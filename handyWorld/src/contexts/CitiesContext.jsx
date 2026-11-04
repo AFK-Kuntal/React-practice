@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import PropTypes from "prop-types";
 
 const BASE_URL = "http://localhost:8000";
@@ -8,6 +14,7 @@ const initialState = {
   cities: [],
   loading: false,
   error: "",
+  currentCity: {},
 };
 
 function reducer(state, action) {
@@ -21,12 +28,16 @@ function reducer(state, action) {
         ...state,
         loading: false,
         cities: [...state.cities, action.payload],
+        currentCity: action.payload,
       };
+    case "city/loaded":
+      return { ...state, loading: false, currentCity: action.payload };
     case "city/deleted":
       return {
         ...state,
         loading: false,
         cities: state.cities.filter((city) => city.id !== action.payload),
+        currentCity: {},
       };
     case "failed":
       return { ...state, error: action.payload, loading: false };
@@ -37,7 +48,7 @@ function reducer(state, action) {
 }
 
 function CitiesProvider({ children }) {
-  const [{ cities, loading, error }, dispatch] = useReducer(
+  const [{ cities, loading, error, currentCity }, dispatch] = useReducer(
     reducer,
     initialState,
   );
@@ -71,6 +82,39 @@ function CitiesProvider({ children }) {
     }
   }
 
+  // async function getCity(id) {
+  //   if (Number(id) === currentCity.id) return;
+  //   dispatch({ type: "loading" });
+  //   try {
+  //     const res = await fetch(`${BASE_URL}/cities/${id}`);
+  //     const data = await res.json();
+  //     dispatch({ type: "city/loaded", payload: data });
+  //   } catch {
+  //     dispatch({ type: "failed", payload: "Failed to Load City" });
+  //   }
+  // }
+
+  const getCity = useCallback(
+    async function (id) {
+      if (Number(id) === Number(currentCity.id)) return;
+
+      dispatch({ type: "loading" });
+
+      try {
+        const res = await fetch(`${BASE_URL}/cities/${id}`);
+
+        if (!res.ok) throw new Error("City not found");
+
+        const data = await res.json();
+
+        dispatch({ type: "city/loaded", payload: data });
+      } catch {
+        dispatch({ type: "failed", payload: "Failed to Load City" });
+      }
+    },
+    [currentCity.id],
+  );
+
   async function deleteCity(id) {
     dispatch({ type: "loading" });
     try {
@@ -83,7 +127,15 @@ function CitiesProvider({ children }) {
 
   return (
     <CitiesContext.Provider
-      value={{ cities, loading, error, createCity, deleteCity }}
+      value={{
+        cities,
+        currentCity,
+        loading,
+        error,
+        createCity,
+        deleteCity,
+        getCity,
+      }}
     >
       {children}
     </CitiesContext.Provider>
