@@ -22,9 +22,8 @@
         "lat": 38.727881642324164,
         "lng": -9.140900099907554
       },
-      "id": 73930385
+      "id": "73930385"
     },
-
     {
       "cityName": "Berlin",
       "country": "Germany",
@@ -48,6 +47,18 @@
         "lng": "-2.13128394200588"
       },
       "id": "98443198"
+    },
+    {
+      "cityName": "London",
+      "country": "United Kingdom of Great Britain and Northern Ireland",
+      "emoji": "🇬🇧",
+      "date": "2026-11-04T07:39:49.296Z",
+      "notes": "it was good",
+      "position": {
+        "lat": "51.49795021767351",
+        "lng": "-0.19861221313476562"
+      },
+      "id": "C2TSIy4shuM"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
